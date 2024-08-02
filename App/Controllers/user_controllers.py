@@ -5,23 +5,21 @@ from flask_bcrypt import Bcrypt
 
 
 def signup():
-    data = request.get_json()
-    name = data.get('name')
-    username = data.get('username')
-    password = data.get('password')
+    user = {
+    "full_name" : request.json.get('full_name'),
+    "email" : request.json.get('email'),
+    "cell_number" : request.json.get('cell_number'),
+    "password" : request.json.get('password')
+    }
 
     # Check if username already exists
-    if username in User:
-        return jsonify({'message': 'Username already exists'}), 400
+    User.create_user(user)
+    return jsonify({'message': 'succes'}), 400
 
-    # Hash the password before storing it
-    hashed_password = Bcrypt.generate_password_hash(password).decode('utf-8')
-    
-    # Create a new user
-    new_user = {'name': name, 'password': hashed_password}
-    
-    # Assign a user ID (You might need to handle this with a database)
-    user_id = len(User) + 1
-    User[username] = {'user_id': user_id, 'name': name, 'password': hashed_password}
-
-    return jsonify({'message': 'User registered successfully'}), 201
+def login():
+    user_details = {
+        "email" : request.json.get('email'),
+        "password" : request.json.get('password')
+    }    
+    User.find_user_by_email
+    return jsonify('message': 'login success' )
