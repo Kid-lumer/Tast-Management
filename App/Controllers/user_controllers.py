@@ -22,4 +22,4 @@ def login():
         "password" : request.json.get('password')
     }    
     User.find_user_by_email
-    return jsonify('message': 'login success' )
+    return jsonify({'message': 'login success' })
